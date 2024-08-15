@@ -1,10 +1,5 @@
 ﻿using RPG.GameObjects;
 using RPG.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RPG.Scenes
 {
@@ -33,7 +28,7 @@ namespace RPG.Scenes
 
         public override void Exit()
         {
-            
+
         }
 
         public override void Input()
@@ -59,14 +54,22 @@ namespace RPG.Scenes
 
         public override void Update()
         {
-            switch(input)
+            switch (input)
             {
                 case "1":
+                    Attack();
+                    break;
+                case "2":
+                    Defend();
+                    break;
+                case "3":
+                    Escape();
+                    break;
             }
-            
-            
-            
-            
+
+
+
+
             if (monster.hp <= 0)
             {
                 Console.WriteLine($"{monster.name} 이/가 쓰러졌습니다!");
@@ -77,7 +80,7 @@ namespace RPG.Scenes
             {
                 Console.WriteLine("You Died");
                 Thread.Sleep(1500);
-                game.ChangeScene(SceneType.EndIng1);
+                game.ChangeScene(SceneType.GameOver);
             }
         }
 
@@ -134,11 +137,55 @@ namespace RPG.Scenes
 
         private void Defend()
         {
+            int DamageReduction = monster.attack - player.Defense;
+            int totalDamageReduction;
 
+            if (DamageReduction < 0)
+            {
+                totalDamageReduction = 0;
+            }
+            else
+            {
+                totalDamageReduction = DamageReduction;
+            }
+            totalDamageReduction += (int)(player.Dex * 0.3);
+            bool Parrying = player.rand.Next(100) < player.Dex;
+
+            if (Parrying)
+            {
+                totalDamageReduction = 100;
+                monster.hp -= 15 * (int)(player.Dex * 1.5);
+                Console.WriteLine("완벽한 방어! 적에게 반격 피해를 주었습니다!");
+                Thread.Sleep(1000);
+            }
+            
+            if (player.CurHP > 0)
+            {
+                player.CurHP -= totalDamageReduction;
+                Console.WriteLine("공격을 막아 피해를 줄였습니다.");
+                Console.WriteLine($"{totalDamageReduction}의 피해를 입었습니다.");
+                Thread.Sleep(1000);
+            }
         }
         private void Escape()
         {
+            bool escape = player.rand.Next(100) < 20 + player.Dex;
 
+            if (escape)
+            {
+                Console.WriteLine("도망치는데 성공 했습니다!");
+                Thread.Sleep(1000);
+                game.ReturnScene();
+            }
+            else
+            {
+                int monsterAtk = monster.attack -= (int)(player.Defense * 0.5);
+                player.CurHP -= monsterAtk;
+                Console.WriteLine("도망에 실패했습니다!");
+                Console.WriteLine($"{monster.name}에게 공격 당했습니다!");
+                Console.WriteLine($"{monsterAtk}의 피해를 입었습니다.");
+                Thread.Sleep(1000);
+            }
         }
     }
 }
