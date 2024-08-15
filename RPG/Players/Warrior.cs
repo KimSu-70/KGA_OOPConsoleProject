@@ -19,7 +19,7 @@ namespace RPG.Players
             this.dex = 10;
             this.luk = 3;
             this.attack = 30 + rand.Next(-10, 20);
-            this.defense = 30 + rand.Next(0, 10);
+            this.defense = 20 + rand.Next(0, 10);
             this.statPoint = 5;
             this.gold = 100;
         }

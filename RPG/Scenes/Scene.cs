@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RPG.GameObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace RPG.Scenes
 {
     public abstract class Scene
     {
-        protected Game game;
+        public Game game;
 
         public Scene(Game game)
         {
@@ -20,5 +21,10 @@ namespace RPG.Scenes
         public abstract void Input();
         public abstract void Update();
         public abstract void Exit();
+
+        internal static void RemoveGameObjeect(Monster monster)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

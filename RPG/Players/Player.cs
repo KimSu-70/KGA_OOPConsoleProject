@@ -18,7 +18,7 @@ namespace RPG.Players
         public Job Job { get { return job; } }
 
         protected int curHP;
-        public int CurHP { get { return curHP; } }
+        public int CurHP { get { return curHP; } set { curHP = value; } }
 
         protected int maxHP;
         public int MaxHP { get { return maxHP; } }

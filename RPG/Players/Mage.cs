@@ -17,7 +17,7 @@ namespace RPG.Players
             this.curHP = maxHP;
             this.str = 5;
             this.dex = 5;
-            this.luk = 10;
+            this.luk = 15;
             this.attack = 50 + rand.Next(-10, 40);
             this.defense = 10 + rand.Next(-10, 10);
             this.statPoint = 5;

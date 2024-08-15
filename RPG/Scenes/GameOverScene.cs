@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace RPG.Scenes
 {
-    public class EndIng3Scene : Scene
+    public class GameOverScene : Scene
     {
-        public EndIng3Scene(Game game) : base(game)
+        public GameOverScene(Game game) : base(game)
         { }
         public override void Enter()
         {

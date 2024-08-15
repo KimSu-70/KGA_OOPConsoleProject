@@ -11,7 +11,7 @@
         }
         public override void Enter()
         {
-            Console.WriteLine("");
+
         }
 
         public override void Exit()
@@ -26,6 +26,7 @@
 
         public override void Render()
         {
+            Console.Clear();
             Console.WriteLine("===================");
             Console.WriteLine($"이름 : {game.Player.Name}");
             Console.WriteLine($"직업 : 모험가");
@@ -45,6 +46,7 @@
         {
             if (game.Player.StatPoint > 0)
             {
+                Console.Clear();
                 Console.WriteLine("능력치 포인트가 남았습니다.");
                 Console.WriteLine("포인트를 사용하시겠습니까?");
                 Console.WriteLine("1. 힘 (STR)");
@@ -74,6 +76,17 @@
 
                 }
             }
+            else
+            {
+                Console.WriteLine("1. 돌아가기");
+                Input();
+                switch (input)
+                {
+                    case "1":
+                        game.ChangeScene(SceneType.Town);
+                        break;
+                }
+            }
         }
 
         private void Statinput(statType statType)
@@ -95,11 +108,7 @@
                 game.Player.StatPoint--;
                 Console.WriteLine($"{statType}가 1증가 하였습니다.");
                 Console.WriteLine($"남은 능력치는 {game.Player.StatPoint}");
-            }
-            else
-            {
-                Console.WriteLine("남은 능력치가 없습니다.");
-                game.ChangeScene(SceneType.Stat);
+                Thread.Sleep( 1000 );
             }
         }
     }

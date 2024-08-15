@@ -1,4 +1,5 @@
-﻿using RPG.Players;
+﻿using RPG.GameObjects;
+using RPG.Players;
 using RPG.Scenes;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace RPG
 
         private Scene[] scenes;
         private Scene curScene;
+        private Scene prevScene;
         
         public Scene CurScene { get { return curScene; } }
 
@@ -40,6 +42,23 @@ namespace RPG
             curScene.Enter();
         }
 
+        public void ReturnScene()
+        {
+            curScene.Exit();
+            curScene = prevScene;
+            curScene.Enter();
+        }
+
+        public void StartBattle(Monster monster)
+        {
+            prevScene = curScene;
+            curScene.Exit();
+            curScene = scenes[(int)SceneType.Battle];
+            BattleScene battleScene = (BattleScene)curScene;
+            battleScene.SetBattle(player, monster);
+            curScene.Enter();
+        }
+
         public void Over()
         {
             isRunning = false;
@@ -55,14 +74,11 @@ namespace RPG
             scenes[(int)SceneType.Title] = new TitleScene(this);
             scenes[(int)SceneType.Select] = new SelectScene(this);
             scenes[(int)SceneType.Town] = new TownScene(this);
-            scenes[(int)SceneType.Forest] = new ForestScene(this);
+            scenes[(int)SceneType.Hotel] = new HotelScene(this);
             scenes[(int)SceneType.Battle] = new BattleScene(this);
             scenes[(int)SceneType.Stat] = new StatScene(this);
-            scenes[(int)SceneType.EndIng1] = new EndIng1Scene(this);
-            scenes[(int)SceneType.EndIng2] = new EndIng2Scene(this);
-            scenes[(int)SceneType.EndIng3] = new EndIng3Scene(this);
-            scenes[(int)SceneType.EndIng4] = new EndIng4Scene(this);
-            scenes[(int)SceneType.EndIng5] = new EndIng5Scene(this);
+            scenes[(int)SceneType.Map] = new MapScene(this);
+            scenes[(int)SceneType.GameOver] = new GameOverScene(this);
 
             curScene = scenes[(int)SceneType.Title];
             curScene.Enter();
@@ -87,6 +103,5 @@ namespace RPG
         {
             curScene.Update();
         }
-
     }
 }

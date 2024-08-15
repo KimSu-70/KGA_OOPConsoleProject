@@ -27,7 +27,7 @@ namespace RPG.Scenes
 
         public override void Exit()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Input()

@@ -9,16 +9,13 @@ namespace RPG
     public enum SceneType 
     { Title, 
       Select, 
-      Town, 
-      Forest,
+      Town,
+      Hotel,
       Battle, 
-      Stat, 
-      EndIng1, 
-      EndIng2,
-      EndIng3,
-      EndIng4, 
-      EndIng5, 
-      
+      Stat,
+      Map,
+      GameOver, 
+
       Size 
     }
 
