@@ -19,6 +19,7 @@ namespace RPG.GameObjects
         public Monster(Scene scene) : base(scene)
         {
             color = ConsoleColor.Red;
+            removeWhenInteract = true;
         }
 
         public override void Interaction(Player player)

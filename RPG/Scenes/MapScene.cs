@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RPG.GameObjects.Monsters;
+using RPG.BGMs;
 
 namespace RPG.Scenes
 {
@@ -15,13 +16,13 @@ namespace RPG.Scenes
         private Point playerPos;
 
         private List<GameObject> gameObjects;
+        private List<Monster> monsters;
 
         private Place town;
 
-        private Monster slime;
-        private Monster orc;
-
         private ConsoleKey input;
+
+        private MusicPlayer mapBGM;
 
         public MapScene(Game game) : base(game)
         {
@@ -40,8 +41,12 @@ namespace RPG.Scenes
                 { false, false, false, false, false, false, false, false, false, false },
             };
 
+            mapBGM = new MusicPlayer();
+
             playerPos = new Point(1, 1);
             gameObjects = new List<GameObject>();
+            monsters = new List<Monster>();
+
             Random rand = new Random();
 
             Place town = new Place(this);
@@ -49,35 +54,49 @@ namespace RPG.Scenes
             town.simbol = 'T';
             town.color = ConsoleColor.Yellow;
             town.destination = SceneType.Town;
+            gameObjects.Add(town);
+
+            AddMonsters();
+        }
+
+        private void AddMonsters()
+        {
+            Random rand = new Random();
 
             Monster monster1 = new Slime(this);
-            monster1.pos = new Point(rand.Next(1,8), rand.Next(3,4));
+            monster1.pos = new Point(rand.Next(1, 8), rand.Next(3, 4));
+            gameObjects.Add(monster1);
 
             Monster monster2 = new Orc(this);
             monster2.pos = new Point(rand.Next(1, 8), rand.Next(5, 6));
+            gameObjects.Add(monster2);
 
             Monster monster3 = new Ghost(this);
             monster3.pos = new Point(rand.Next(1, 8), rand.Next(7, 8));
-
-            gameObjects.Add(monster1);
-            gameObjects.Add(monster2);
             gameObjects.Add(monster3);
 
-            gameObjects.Add(town);
+            gameObjects.AddRange(monsters);  // List gameObjects에 배열로 요소를 추가 AddRange
         }
         public override void Enter()
         {
             Console.CursorVisible = false;
 
+            mapBGM.Path = @"C:\BGMs\Map.mp3";
+            mapBGM.Volume = 22;
+            mapBGM.Loop = true;
+            mapBGM.Play();
+
             Console.Clear();
             Console.WriteLine("숲으로 이동합니다...");
-            Thread.Sleep(2000);
+            Thread.Sleep(1500);
             Console.Clear();
         }
 
         public override void Exit()
         {
             Console.CursorVisible = true;
+            mapBGM.Stop();
+            MonsterRegen();
         }
 
         public override void Input()
@@ -179,8 +198,25 @@ namespace RPG.Scenes
                     {
                         gameObjects.Remove(gameObject);
                     }
+                    else if(gameObject is Monster monster)
+                    {
+                        if(monster.hp <= 0)
+                        {
+                            gameObjects.Remove(monster);
+                            monsters.Remove(monster);
+                        }
+                    }
                     return;
                 }
+            }
+        }
+
+        private void MonsterRegen()
+        {
+            Random random = new Random();
+            if (monsters.Count < 1)
+            {
+                AddMonsters();
             }
         }
     }
