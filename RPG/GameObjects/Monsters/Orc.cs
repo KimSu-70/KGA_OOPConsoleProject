@@ -15,6 +15,7 @@ namespace RPG.GameObjects.Monsters
             hp = 120;
             attack = 35;
             defense = 30;
+            gold = 30;
             simbol = 'O';
         }
     }

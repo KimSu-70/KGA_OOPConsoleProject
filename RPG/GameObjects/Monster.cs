@@ -15,6 +15,7 @@ namespace RPG.GameObjects
         public int hp;
         public int attack;
         public int defense;
+        public int gold;
 
         public Monster(Scene scene) : base(scene)
         {
