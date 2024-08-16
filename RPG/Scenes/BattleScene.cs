@@ -1,4 +1,6 @@
-﻿using RPG.GameObjects;
+﻿using RPG.BGMs;
+using RPG.GameObjects;
+using RPG.GameObjects.Monsters;
 using RPG.Players;
 
 namespace RPG.Scenes
@@ -10,25 +12,42 @@ namespace RPG.Scenes
         private bool battleResult = false;
         private string input;
 
+        private MusicPlayer battleBGM;
+
         public BattleScene(Game game) : base(game)
-        { }
+        {
+            battleBGM = new MusicPlayer();
+        }
 
         public void SetBattle(Player player, Monster monster)
         {
             this.player = player;
             this.monster = monster;
+
+            if (monster is Ghost)
+            {
+                battleBGM.Path = @"C:\BGMs\BattleBoss.mp3";
+            }
+            else
+            {
+                battleBGM.Path = @"C:\BGMs\BattleNormal.mp3";
+            }
         }
 
         public override void Enter()
         {
             Console.Clear();
-            Console.WriteLine($"{monster.name} 이/가 나타났다!");
+            Console.WriteLine($"{ monster.name} 이/가 나타났다!");
             Thread.Sleep(2000);
+
+            battleBGM.Volume = 22;
+            battleBGM.Loop = true;
+            battleBGM.Play();
         }
 
         public override void Exit()
         {
-
+            battleBGM.Stop();
         }
 
         public override void Input()
@@ -45,7 +64,7 @@ namespace RPG.Scenes
             Console.WriteLine("무엇을 하시겠습니까?");
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 수비");
-            Console.WriteLine("2. 도망");
+            Console.WriteLine("3. 도망");
             Console.WriteLine("--------------------------------");
 
             Console.WriteLine($"{monster.name} 남은 체력 : {monster.hp}");
@@ -72,13 +91,14 @@ namespace RPG.Scenes
 
             if (monster.hp <= 0)
             {
+                monster.hp = 0;
                 Console.WriteLine($"{monster.name} 이/가 쓰러졌습니다!");
                 Thread.Sleep(1500);
                 game.ReturnScene();
             }
             else if (game.Player.CurHP <= 0)
             {
-                Console.WriteLine("You Died");
+                Console.WriteLine("당신은 쓰러졌습니다.");
                 Thread.Sleep(1500);
                 game.ChangeScene(SceneType.GameOver);
             }

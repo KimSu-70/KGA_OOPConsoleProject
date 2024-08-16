@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RPG.BGMs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,23 @@ namespace RPG.Scenes
 {
     public class TitleScene : Scene
     {
+
+        private MusicPlayer MainBGM;
         public TitleScene(Game game) : base(game)
-        { }
+        {
+            MainBGM = new MusicPlayer();
+        }
         public override void Enter()
         {
-            
+            MainBGM.Path = @"C:\BGMs\Title.mp3";
+            MainBGM.Volume = 22;
+            MainBGM.Loop = true;
+            MainBGM.Play();
         }
 
         public override void Exit()
         {
-            
+            MainBGM.Stop(); 
         }
 
         public override void Input()
