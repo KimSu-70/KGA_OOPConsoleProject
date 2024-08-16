@@ -12,27 +12,34 @@ namespace RPG.Scenes
         { }
         public override void Enter()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Exit()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Input()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("    다시 시작하려면 아무키나 누르세요    ");
+            Console.ReadKey();
         }
 
         public override void Render()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine("====================================");
+            Console.WriteLine("=                                  =");
+            Console.WriteLine("=             You Died             =");
+            Console.WriteLine("=                                  =");
+            Console.WriteLine("====================================");
+            Console.WriteLine();
         }
 
         public override void Update()
         {
-            throw new NotImplementedException();
+            game.ChangeScene(SceneType.Select);
         }
     }
 }
