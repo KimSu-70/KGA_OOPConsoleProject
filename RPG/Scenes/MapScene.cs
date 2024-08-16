@@ -96,7 +96,6 @@ namespace RPG.Scenes
         {
             Console.CursorVisible = true;
             mapBGM.Stop();
-            MonsterRegen();
         }
 
         public override void Input()
@@ -116,6 +115,7 @@ namespace RPG.Scenes
         {
             Move();
             Interaction();
+            MonsterRegen();
         }
 
         private void PrintMap()
@@ -214,7 +214,7 @@ namespace RPG.Scenes
         private void MonsterRegen()
         {
             Random random = new Random();
-            if (monsters.Count < 1)
+            if (random.Next(100) < 4)
             {
                 AddMonsters();
             }

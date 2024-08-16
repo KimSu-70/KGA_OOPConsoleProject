@@ -87,16 +87,7 @@ namespace RPG.Scenes
             }
 
 
-
-
-            if (monster.hp <= 0)
-            {
-                monster.hp = 0;
-                Console.WriteLine($"{monster.name} 이/가 쓰러졌습니다!");
-                Thread.Sleep(1500);
-                game.ReturnScene();
-            }
-            else if (game.Player.CurHP <= 0)
+            if (game.Player.CurHP <= 0)
             {
                 Console.WriteLine("당신은 쓰러졌습니다.");
                 Thread.Sleep(1500);
@@ -149,7 +140,9 @@ namespace RPG.Scenes
             }
             else
             {
+                player.Gold += monster.gold;
                 Console.WriteLine($"{monster.name}에게 승리하였습니다!");
+                Console.WriteLine($"{monster.gold} 를 획득하였습니다.");
                 Thread.Sleep(1000);
                 game.ReturnScene();
             }

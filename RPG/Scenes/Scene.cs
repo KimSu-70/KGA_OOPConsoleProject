@@ -24,7 +24,7 @@ namespace RPG.Scenes
 
         internal static void RemoveGameObjeect(Monster monster)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
